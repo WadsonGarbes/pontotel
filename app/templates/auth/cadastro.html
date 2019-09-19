@@ -1,0 +1,14 @@
+<!-- app/templates/auth/cadastro.html -->
+
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}Cadastre-se{% endblock %}
+{% block body %}
+<div class="content-section">
+  <div class="center">
+    <h1>Cadastre-se</h1>
+    <br/>
+    {{ wtf.quick_form(form) }}
+  </div>
+</div>
+{% endblock %}
