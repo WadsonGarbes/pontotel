@@ -62,7 +62,6 @@ $ pip install -r requirements.txt
 baixa as dependências do projeto
 
 
-```
 ## Rodando a aplicação
 
 Ative, caso ainda não esteja ativado, o ambiente virtual pontotel, assim será posível instalar todas as dependências do projeto sem afetar a máquina local!
