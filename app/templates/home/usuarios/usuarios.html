@@ -1,0 +1,65 @@
+<!-- app/templates/admin/employees/employees.html -->
+
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %}Funcionários{% endblock %}
+{% block body %}
+<div class="content-section">
+  <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <br/>
+        {{ utils.flashed_messages() }}
+        <br/>
+        <h1 style="text-align:center;">Usuários</h1>
+        {% if usuarios %}
+          <hr class="intro-divider">
+          <div class="center">
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th width="20%"> Nome </th>
+                  <th width="20%"> Usuário </th>
+                  <th width="30%"> E-mail </th>
+                  <th width="15%"> Editar </th>
+                  <th width="15%"> Deletar </th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for usuario in usuarios %}
+                {% if usuario.is_admin %}
+                    <tr style="background-color: #aec251; color: white;">
+                        <td> <i class="fa fa-key"></i> Admin </td>
+                        <td> N/A </td>
+                        <td> N/A </td>
+                        <td> N/A </td>
+                        <td> N/A </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                      <td> {{ usuario.nome }} {{ usuario.sobrenome }} </td>
+                      <td> {{ usuario.login }} </td>
+                      <td> {{ usuario.email }} </td>
+                      <td>
+                        <a href="{{ url_for('home.edit_usuarios', id=usuario.id) }}">
+                          <i class="fa fa-user-plus"></i> Editar
+                        </a>
+                      </td>
+                      <td>
+                        <a href="{{ url_for('home.delete_usuario', id=usuario.id) }}" onclick="return confirm('Tem certeza que você deseja deletar este usuário ?');">
+                          <i class="fa fa-times"></i> Deletar
+                        </a>
+                      </td>
+                    </tr>
+                {% endif %}
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+<!-- app/templates/home/painel.html -->
+
+{% extends "base.html" %}
+{% block title %}Painel{% endblock %}
+{% block body %}
+<div class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="intro-message">
+                    <h1>Painel</h1>
+                    <hr class="intro-divider">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block footer %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list-inline">
+                        <li><a href="{{ url_for('home.homepage') }}">Home</a></li>
+                        <li class="footer-menu-divider">⋅</li>
+						{% if current_user.is_authenticated %}
+							<li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+    					{% else %}
+                        	<li><a href="#">Cadastrar</a></li>
+                        	<li class="footer-menu-divider">⋅</li>
+                        	<li><a href="#">Login</a></li>
+						{% endif %}
+                    </ul>
+                    <p class="copyright text-muted small">Copyright © 2019. All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+	{% endblock %}
+
