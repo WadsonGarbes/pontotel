@@ -1,4 +1,5 @@
 from datetime import datetime
+from flask import current_app, url_for
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db, login
@@ -82,7 +83,8 @@ class Cotacao(db.Model):
     __tablename__ = 'cotacoes'
 
     id = db.Column(db.Integer, primary_key=True)
-    data = db.Column(db.Date, default=datetime.now)
+    data_consulta = db.Column(db.String(60))
+    data_cadastro = db.Column(db.String(60))
     abertura = db.Column(db.Float)
     maximo = db.Column(db.Float) 
     minimo = db.Column(db.Float) 
@@ -97,6 +99,8 @@ class Cotacao(db.Model):
     def to_dict(self):
         data = {
             'id': self.id,
+            'data_consulta': self.data_consulta,
+            'data_cadastro': self.data_cadastro,
             'abertura': self.abertura,
             'maximo': self.maximo,
             'minimo': self.minimo,
@@ -104,3 +108,30 @@ class Cotacao(db.Model):
             'volume': self.volume
         }
         return data
+
+    def x(query, page, per_page, endpoint, **kwargs):
+        recursos = query.paginate(page, per_page, False)
+        data = {
+            'itens': [item.to_dict() for item in recursos.items],
+            '_meta': {
+                'pagina': page,
+                'por_pagina:': per_page,
+                'total_de_pagina': recursos.pages,
+                'total_de_itens': recursos.total
+            },
+            '_links': {
+                'proprio': url_for(endpoint, page=page, per_page=per_page,
+                                   **kwargs),
+                'proximo': url_for(endpoint, page=page + 1, per_page=per_page,
+                                   **kwargs) if recursos.has_next else None,
+                'anterior': url_for(endpoint, page=page - 1, per_page=per_page,
+                                   **kwargs) if recursos.has_prev else None, 
+            }
+        }
+        return data
+
+    def from_dict(self, data):
+        for field in ['data', 'abertura', 'fechamento', 'maximo', 'minimo', 'volume']:
+            if field in data:
+                setattr(self, field, data[field])
+
