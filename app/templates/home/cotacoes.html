@@ -18,7 +18,8 @@
             <table class="table table-striped table-bordered">
               <thead>
                 <tr>
-                  <th> Data </th>
+                  <th> Data de cadastro </th>
+                  <th> Data de consulta </th>
                   <th> Valor de Abertura </th>
                   <th> Valor máximo </th>
                   <th> Valor mínimo </th>
@@ -31,7 +32,8 @@
               <tbody>
               {% for cotacao in cotacoes %}
                 <tr>
-                  <td> {{ cotacao.data }} </td>
+                  <td> {{ cotacao.data_cadastro }} </td>
+                  <td> {{ cotacao.data_consulta}} </td>
                   <td> {{ cotacao.abertura }} </td>
                   <td> {{ cotacao.maximo }} </td>
                   <td> {{ cotacao.minimo }} </td>
