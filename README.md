@@ -81,6 +81,14 @@ Rode o servidor
 (pontotel) $ flask run
 ```
 
+## API Endpoints
+
+|  URL | Métodos | Descrição |
+| -------- | ------------- | --------- |
+| `/api/cotacoes/<int:id>` | GET, PUT, DELETE  | Visualizar cotação, alterar cotação, deletar cotação |
+| `/api/cotacoes` | GET, POST  | Ver todas as cotações, cadastrar cotação |
+
+
 Acesse o link disponibilizado pelo servidor (http://127.0.0.1:5000) em seu navegador de preferência
 
 ## Cansei!
