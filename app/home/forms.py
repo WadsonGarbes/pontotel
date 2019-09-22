@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, DateField, FloatField, PasswordField
+from wtforms import StringField, SubmitField, DateField, FloatField, PasswordField, \
+                    DateTimeField
 from wtforms.validators import DataRequired, EqualTo
 from datetime import datetime
 
@@ -8,7 +9,7 @@ class CotaForm(FlaskForm):
     submit = SubmitField('Enviar')
 
 class EditarCotacaoForm(FlaskForm):
-    dt = DateField('Data da consulta',validators=[DataRequired()], default=datetime.now)
+    dt = StringField('Data do cadastro', validators=[DataRequired()])
     abertura = FloatField('Valor de abertura', validators=[DataRequired()])
     maximo = FloatField('Valor máximo', validators=[DataRequired()]) 
     minimo = FloatField('Valor mínimo', validators=[DataRequired()]) 
