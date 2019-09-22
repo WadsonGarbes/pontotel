@@ -63,6 +63,7 @@ def atualizar_cotacao(id):
 @api.route('/cotacoes/<int:id>', methods=['DELETE'])
 def deletar_cotacao(id):
     cot = Cotacao.query.get_or_404(id)
+    response = jsonify(cot.to_dict())
     db.session.delete(cot)
     db.session.commit()
     response.status_code = 204
