@@ -14,7 +14,7 @@ COPY migrations migrations
 COPY pontotel.py config.py boot.sh ./
 RUN chmod a+x boot.sh
 
-ENV FLASK_APP microblog.py
+ENV FLASK_APP pontotel.py
 
 RUN chown -R pontotel:pontotel ./
 USER pontotel
