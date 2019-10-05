@@ -17,7 +17,6 @@ $ sudo docker run -d -p 8000:5000 --rm wadsongarbes/pontotel:1.0
 ```
 
 Em seguida, acesse http://localhost:8000
-```
 
 ## API Endpoints
 
