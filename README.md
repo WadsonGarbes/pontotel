@@ -5,80 +5,18 @@ Estas instruções darão à você uma cópia do projeto rodando em sua máquina
 ### Pré-requisitos
 
 ```
-Shell Linux 
-```
-```
-Python3.x
-```
-```
-virtualenv
-```
-```
-Este repositório
+Docker
 ```
 
-### Instalando
+### Rodando a aplicação com Docker!
 
-Por padrão, toda distribuição Linux acompanha Python2.7 e Python3.x. É possível verificar isto abrindo um shell em seu ambiente Linux e digitando:
-
-```
-$ python3 --version
-```
-
-A resposta deve ser:
+Execute o seguinte comando para obter uma cópia da aplicação em seu localhost:
 
 ```
-Python 3.x.x
+$ sudo docker run -d -p 8000:5000 --rm wadsongarbes/pontotel:1.0
 ```
 
-Daí então podemos começar a instalar as dependências para rodar a aplicação:
-
-```
-$ sudo apt install pip3
-```
-
-pip é o instalador de pacotes do python, necessário para instalação das dependências da aplicação
-
-```
-$ sudo apt install python3-venv
-```
-
-Responsável por isolar nossa aplicação da máquina "hospedeira", garantido um controle maior sobre as dependências da aplicação
-
-```
-$ git clone https://github.com/wadsongarbes/pontotel
-```
-
-baixe a aplicação e a armazene-a no repositório de mesmo nome (pontotel)
-
-```
-$ python3 -m venv ~/.virtualenvs/pontotel && . pontotel/bin/activate
-```
-cria e ativa um ambiente virtual
-
-```
-$ pip install -r requirements.txt
-```
-baixa as dependências do projeto
-
-
-## Rodando a aplicação
-
-Ative, caso ainda não esteja ativado, o ambiente virtual pontotel, assim será posível instalar todas as dependências do projeto sem afetar a máquina local!
-
-```
-(pontotel) $ export FLASK_APP=pontotel.py 
-```
-
-Rode o script que cria o banco:
-```
-(pontotel) $ . cria_banco.sh 
-```
-
-Rode o servidor
-
-```
-(pontotel) $ flask run
+Em seguida, acesse http://localhost:8000
 ```
 
 ## API Endpoints
@@ -88,14 +26,6 @@ Rode o servidor
 | `/api/cotacoes/<int:id>` | GET, PUT, DELETE  | Visualizar cotação, alterar cotação, deletar cotação |
 | `/api/cotacoes` | GET, POST  | Ver todas as cotações, cadastrar cotação |
 
-
-Acesse o link disponibilizado pelo servidor (http://127.0.0.1:5000) em seu navegador de preferência
-
-## Cansei!
-
-No shell onde o servidor está rodando, tecle `ctrl + c` e desative o ambiente virtual com
-
-`(pontotel) $ deactivate`
 
 ## Construído com
 
