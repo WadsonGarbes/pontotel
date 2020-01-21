@@ -18,6 +18,8 @@ $ sudo docker run -d -p 8000:5000 --rm wadsongarbes/pontotel:1.0
 
 Em seguida, acesse http://localhost:8000
 
+Ou acesse a live demo em http://64.227.16.236
+
 ## API Endpoints
 
 |  URL | Métodos | Descrição |
