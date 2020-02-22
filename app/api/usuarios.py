@@ -28,9 +28,9 @@ def create_user():
     data = request.get_json() or {}
     if 'login' not in data or 'email' not in data or 'senha' not in data:
         return bad_request('deve incluir login, email e senha!')
-    if User.query.filter_by(username=data['login']).first():
+    if Usuario.query.filter_by(login=data['login']).first():
         return bad_request('Por favor use outro login')
-    if User.query.filter_by(email=data['email']).first():
+    if Usuario.query.filter_by(email=data['email']).first():
         return bad_request('Por favor use outro endereço de email')
     user = Usuario()
     user.from_dict(data, new_user=True)

@@ -68,6 +68,9 @@ class Usuario(UserMixin, PaginatedAPIMixin, db.Model):
         """
         return check_password_hash(self.senha_hash, senha)
 
+    def set_password(self, password):
+        self.senha_hash = generate_password_hash(password)
+
     def check_password(self, password):
         return check_password_hash(self.senha_hash, password)
 
