@@ -2,10 +2,12 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, DateField, FloatField, PasswordField, \
                     DateTimeField
 from wtforms.validators import DataRequired, EqualTo
-from datetime import datetime
+from datetime import datetime, timedelta
+
+dia_anterior = datetime.utcnow() - timedelta(days=1)
 
 class CotaForm(FlaskForm):
-    dt = DateField('Data da cotação', validators=[DataRequired()], default=datetime.utcnow)
+    dt = DateField('Data da cotação', validators=[DataRequired()], render_kw={'placeholder': "Formato: " + dia_anterior.strftime('%Y-%m-%d')})
     submit = SubmitField('Enviar')
 
 class EditarCotacaoForm(FlaskForm):

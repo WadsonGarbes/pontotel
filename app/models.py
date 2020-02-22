@@ -151,8 +151,9 @@ class Cotacao(db.Model):
     __tablename__ = 'cotacoes'
 
     id = db.Column(db.Integer, primary_key=True)
-    data_consulta = db.Column(db.String(60))
-    data_cadastro = db.Column(db.String(60))
+    data_consulta = db.Column(db.DateTime, default=datetime.utcnow() - timedelta(hours=3))
+    data_cadastro = db.Column(db.DateTime, default=datetime.utcnow() - timedelta(hours=3))
+    data_cadastro_string = db.Column(db.String, default=(datetime.utcnow() - timedelta(hours=3)).strftime('%d-%m-%Y'))
     abertura = db.Column(db.Float)
     maximo = db.Column(db.Float) 
     minimo = db.Column(db.Float) 

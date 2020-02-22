@@ -30,7 +30,7 @@ def painel():
 def listar_cotacoes():
     page = request.args.get('page', 1, type=int)
 
-    cotacoes = Cotacao.query.order_by(Cotacao.data_cadastro.desc()).paginate(
+    cotacoes = Cotacao.query.order_by(Cotacao.data_cadastro_string.desc()).paginate(
             page, current_app.config['CPP'], False)
 
     next_url = url_for('home.listar_cotacoes', page=cotacoes.next_num)\
@@ -82,7 +82,7 @@ def editar_cotacao(id):
     form = EditarCotacaoForm(obj=cotacao)
 
     if form.validate_on_submit():
-        cotacao.data_cadastro = form.dt.data
+        cotacao.data_cadastro = datetime.strptime(form.dt.data, '%d-%m-%Y')
         cotacao.abertura = form.abertura.data
         cotacao.maximo = form.maximo.data
         cotacao.minimo = form.minimo.data
@@ -93,7 +93,7 @@ def editar_cotacao(id):
 
         return redirect(url_for('home.listar_cotacoes'))
 
-    form.dt.data = cotacao.data_cadastro
+    form.dt.data = cotacao.data_cadastro.strftime("%d-%m-%Y")
     form.abertura.data = cotacao.abertura 
     form.maximo.data = cotacao.maximo
     form.minimo.data = cotacao.minimo

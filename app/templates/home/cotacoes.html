@@ -32,8 +32,8 @@
               <tbody>
               {% for cotacao in cotacoes %}
                 <tr>
-                  <td> {{ cotacao.data_cadastro }} </td>
-                  <td> {{ cotacao.data_consulta}} </td>
+                  <td> {{ cotacao.data_cadastro.strftime('%d-%m-%Y') }} </td>
+                  <td> {{ cotacao.data_consulta.strftime('%d-%m-%Y')}} </td>
                   <td> {{ cotacao.abertura }} </td>
                   <td> {{ cotacao.maximo }} </td>
                   <td> {{ cotacao.minimo }} </td>
