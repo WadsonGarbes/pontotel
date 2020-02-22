@@ -7,25 +7,29 @@ Estas instruções darão à você uma cópia do projeto rodando em sua máquina
 ```
 Docker
 ```
+```
+HTTPie
+```
 
 ### Rodando a aplicação com Docker!
 
 Execute o seguinte comando para obter uma cópia da aplicação em seu localhost:
 
 ```
-$ sudo docker run -d -p 8000:5000 --rm wadsongarbes/pontotel:1.0
+$ docker run -d -p 8000:5000 --rm wadsongarbes/pontotel:1.0
 ```
 
 Em seguida, acesse http://localhost:8000
 
-Ou acesse a live demo em http://64.227.16.236
 
 ## API Endpoints
 
 |  URL | Métodos | Descrição |
 | -------- | ------------- | --------- |
-| `/api/cotacoes/<int:id>` | GET, PUT, DELETE  | Visualizar cotação, alterar cotação, deletar cotação |
+| `/api/cotacoes/<int:id>` | GET, PUT, DELETE  | Visualizar cotação específica , alterar cotação, deletar cotação |
 | `/api/cotacoes` | GET, POST  | Ver todas as cotações, cadastrar cotação |
+| `/api/usuarios/<int:id>` | GET, PUT  | Visualizar usuario específico, alterar usuário |
+| `/api/usuarios` | GET, POST, PUT  | Ver todas os usuários, cadastrar usurios, alterar usuários |
 
 
 ## Construído com
