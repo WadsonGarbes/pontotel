@@ -16,7 +16,7 @@ HTTPie
 Execute o seguinte comando para obter uma cópia da aplicação em seu localhost:
 
 ```
-$ docker run -d -p 8000:5000 --rm wadsongarbes/pontotel:1.0
+$ docker run -d -p 8000:5000 --rm wadsongarbes/pontotel:latest
 ```
 
 Em seguida, acesse http://localhost:8000
@@ -30,6 +30,16 @@ Em seguida, acesse http://localhost:8000
 | `/api/cotacoes` | GET, POST  | Ver todas as cotações, cadastrar cotação |
 | `/api/usuarios/<int:id>` | GET, PUT  | Visualizar usuario específico, alterar usuário |
 | `/api/usuarios` | GET, POST, PUT  | Ver todas os usuários, cadastrar usurios, alterar usuários |
+
+## Acessando a API com um token
+
+É necessário possuir um usuário para gerar um token para usar a API. Após criado seu usuário, instale o [HTTPie](https://httpie.org/#installation). É possivel então gerar um token com seu usuário e senha. Exemplo:
+
+```
+$ http --auth user:password http://localhost:8000/api/tokens
+```
+
+Pronto! O token tem duração de uma hora! Divirta-se!
 
 
 ## Construído com
