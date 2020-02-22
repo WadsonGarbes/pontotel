@@ -26,9 +26,10 @@ Em seguida, acesse http://localhost:8000
 
 |  URL | Métodos | Descrição |
 | -------- | ------------- | --------- |
-| `/api/cotacoes/<int:id>` | GET, PUT, DELETE  | Visualizar cotação, alterar cotação, deletar cotação |
+| `/api/cotacoes/<int:id>` | GET, PUT, DELETE  | Visualizar cotação específica , alterar cotação, deletar cotação |
 | `/api/cotacoes` | GET, POST  | Ver todas as cotações, cadastrar cotação |
-| `/api/usuarios` | GET, POST, PUT, DELETE  | Ver todas os usuários, cadastrar usurios, alterar usuários, deletar usuários |
+| `/api/usuarios/<int:id>` | GET, PUT  | Visualizar usuario específico, alterar usuário |
+| `/api/usuarios` | GET, POST, PUT  | Ver todas os usuários, cadastrar usurios, alterar usuários |
 
 
 ## Construído com
