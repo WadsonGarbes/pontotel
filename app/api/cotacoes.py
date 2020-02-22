@@ -3,14 +3,19 @@ from app import db
 from app.models import Cotacao
 from app.api import api
 from app.api.erros import bad_request
+from app.api.auth import token_auth
 import requests
 from datetime import datetime
 
+
 @api.route('/cotacoes/<int:id>', methods=['GET'])
+@token_auth.login_required
 def get_cotacao(id):
     return jsonify(Cotacao.query.get_or_404(id).to_dict())
 
+
 @api.route('/cotacoes', methods=['GET'])
+@token_auth.login_required
 def get_cotacoes():
     page = request.args.get('page', 1, type=int)
     per_page = min(request.args.get('per_page', 10, type=int), 100)
@@ -18,7 +23,9 @@ def get_cotacoes():
             'api.get_cotacoes')
     return jsonify(data)
 
+
 @api.route('/cotacoes', methods=['POST'])
+@token_auth.login_required
 def cadastrar_cotacao():
     data = request.get_json() or {}
     if 'data' not in data:
@@ -41,7 +48,9 @@ def cadastrar_cotacao():
     response.headers['Localizacao'] = url_for('api.get_cotacao', id=cotacao.id)
     return response
 
+
 @api.route('/cotacoes/<int:id>', methods=['PUT'])
+@token_auth.login_required
 def atualizar_cotacao(id):
     cotacao = Cotacao.query.get_or_404(id)
     data = request.get_json() or {}
@@ -60,7 +69,9 @@ def atualizar_cotacao(id):
     db.session.commit()
     return jsonify(cotacao.to_dict())
 
+
 @api.route('/cotacoes/<int:id>', methods=['DELETE'])
+@token_auth.login_required
 def deletar_cotacao(id):
     cot = Cotacao.query.get_or_404(id)
     response = jsonify(cot.to_dict())
@@ -69,4 +80,3 @@ def deletar_cotacao(id):
     response.status_code = 204
     return response
 
-        
