@@ -33,13 +33,27 @@ Em seguida, acesse http://localhost:8000
 
 ## Acessando a API com um token
 
-É necessário possuir um usuário para gerar um token para usar a API. Após criado seu usuário, instale o [HTTPie](https://httpie.org/#installation). É possivel então gerar um token com seu usuário e senha. Exemplo:
+É necessário possuir um usuário para gerar um token para usar a API. Instale o [HTTPie](https://httpie.org/#installation). É possivel então gerar um token com seu usuário e senha. Exemplo:
 
 ```
-$ http --auth user:password POST http://localhost:8000/api/tokens
+$ http POST http://localhost:8000/api/usuarios login="username" email="username@domain.com" senha="123"
 ```
 
-Pronto! O token tem duração de uma hora! Divirta-se!
+```
+$ http --auth username:123 POST http://localhost:8000/api/tokens
+```
+
+O comando acima irá gerar seu token de acesso. Ele possui uma hora de duração. Para maior praticidade, guarde-o em uma variavel com o seguinte comando
+
+```
+$ export TOKEN=<seu_token>
+```
+
+Acesse um dos endpoints da seguinte maneira:
+
+```
+$ http GET http://localhost:8000/api/usuarios Authorization:"Bearer $TOKEN"
+```
 
 
 ## Construído com
