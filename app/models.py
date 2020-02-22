@@ -170,14 +170,14 @@ class Cotacao(db.Model):
 
     def to_dict(self):
         data = {
-            'id': self.id,
             'data_consulta': self.data_consulta,
-            'data_cadastro': self.data_cadastro,
+            'id': self.id,
             'abertura': self.abertura,
             'maximo': self.maximo,
             'minimo': self.minimo,
             'fechamento': self.fechamento,
-            'volume': self.volume
+            'volume': self.volume,
+            'data_cadastro': self.data_cadastro
         }
         return data
 
