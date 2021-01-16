@@ -6,6 +6,7 @@ WORKDIR /home/pontotel
 
 
 RUN apk add libpq
+RUN apk add --virtual .build-deps gcc python3-dev musl-dev postgresql-dev
 COPY requirements.txt requirements.txt
 RUN python -m venv venv
 RUN venv/bin/pip install -r requirements.txt
