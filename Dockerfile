@@ -20,4 +20,5 @@ RUN chown -R pontotel:pontotel ./
 USER pontotel
 
 EXPOSE 5000
-ENTRYPOINT ["./boot.sh"]
+CMD gunicorn -b :5000 --access-logfile - --error-logfile - pontotel:app
+# ENTRYPOINT ["./boot.sh"]
