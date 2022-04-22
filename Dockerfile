@@ -1,4 +1,4 @@
-FROM python:3.6-alpine
+FROM python:3.9-alpine
 
 RUN adduser -D pontotel
 
@@ -14,7 +14,7 @@ RUN venv/bin/pip install gunicorn psycopg2
 
 COPY app app
 COPY migrations migrations
-COPY pontotel.py config.py boot.sh ./
+COPY pontotel.py config.py ./
 RUN chmod a+x boot.sh
 
 ENV FLASK_APP pontotel.py
@@ -24,4 +24,3 @@ USER pontotel
 
 EXPOSE 5000
 CMD venv/bin/gunicorn -b :5000 --access-logfile - --error-logfile - pontotel:app
-# ENTRYPOINT ["./boot.sh"]
