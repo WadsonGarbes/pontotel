@@ -1,4 +1,4 @@
-from flask import jsonify, request, url_for, g, abort
+from flask import jsonify, request, url_for, Blueprint
 from app import db
 from app.models import Cotacao
 from app.api import api
@@ -6,16 +6,21 @@ from app.api.erros import bad_request
 from app.api.auth import token_auth
 import requests
 from datetime import datetime
+from apifairy import authenticate, body, response, other_responses, arguments
+
+cotacoes = Blueprint('cotacoes', __name__)
 
 
-@api.route('/cotacoes/<int:id>', methods=['GET'])
+@cotacoes.route('/cotacoes/<int:id>', methods=['GET'])
 @token_auth.login_required
+@authenticate(token_auth)
 def get_cotacao(id):
     return jsonify(Cotacao.query.get_or_404(id).to_dict())
 
 
-@api.route('/cotacoes', methods=['GET'])
+@cotacoes.route('/cotacoes', methods=['GET'])
 @token_auth.login_required
+@authenticate(token_auth)
 def get_cotacoes():
     page = request.args.get('page', 1, type=int)
     per_page = min(request.args.get('per_page', 10, type=int), 100)
@@ -24,8 +29,9 @@ def get_cotacoes():
     return jsonify(data)
 
 
-@api.route('/cotacoes', methods=['POST'])
+@cotacoes.route('/cotacoes', methods=['POST'])
 @token_auth.login_required
+@authenticate(token_auth)
 def cadastrar_cotacao():
     data = request.get_json() or {}
     if 'data' not in data:
@@ -49,8 +55,9 @@ def cadastrar_cotacao():
     return response
 
 
-@api.route('/cotacoes/<int:id>', methods=['PUT'])
+@cotacoes.route('/cotacoes/<int:id>', methods=['PUT'])
 @token_auth.login_required
+@authenticate(token_auth)
 def atualizar_cotacao(id):
     cotacao = Cotacao.query.get_or_404(id)
     data = request.get_json() or {}
@@ -70,8 +77,9 @@ def atualizar_cotacao(id):
     return jsonify(cotacao.to_dict())
 
 
-@api.route('/cotacoes/<int:id>', methods=['DELETE'])
+@cotacoes.route('/cotacoes/<int:id>', methods=['DELETE'])
 @token_auth.login_required
+@authenticate(token_auth)
 def deletar_cotacao(id):
     cot = Cotacao.query.get_or_404(id)
     response = jsonify(cot.to_dict())

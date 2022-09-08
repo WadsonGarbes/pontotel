@@ -1,4 +1,4 @@
-from flask import jsonify, request, url_for, g, abort
+from flask import jsonify, request, url_for, g, abort, Blueprint
 from app import db
 from app.models import Usuario
 from app.api import api
@@ -6,44 +6,53 @@ from app.api.erros import bad_request
 from app.api.auth import token_auth
 import requests
 from datetime import datetime
+from apifairy import authenticate, body, response, other_responses, arguments
+
+from app.api.schemas import PaginatedUserSchema, UserSchema, UnauthorizedSchema, InvalidPayloadSchema, PaginationSchema
+
+usuarios = Blueprint('usuarios', __name__)
 
 
-@api.route('/usuarios/<int:id>', methods=['GET'])
+user_schema = UserSchema()
+
+@usuarios.route('/usuarios/<int:id>', methods=['GET'])
 @token_auth.login_required
+@authenticate(token_auth)
 def get_user(id):
     return jsonify(Usuario.query.get_or_404(id).to_dict())
 
 
-@api.route('/usuarios', methods=['GET'])
+@usuarios.route('/usuarios', methods=['GET'])
 @token_auth.login_required
-def get_users():
-    page = request.args.get('page', 1, type=int)
-    per_page = min(request.args.get('per_page', 10, type=int), 100)
-    data = Usuario.to_collection_dict(Usuario.query, page, per_page, 'api.get_users')
-    return jsonify(data)
+@authenticate(token_auth)
+@arguments(PaginationSchema)
+@response(PaginatedUserSchema)
+def get_users(pagination_args):
+    return Usuario.to_collection_dict(Usuario.query, pagination_args["page"], pagination_args["per_page"], 'usuarios.get_users') 
 
 
-@api.route('/usuarios', methods=['POST'])
-def create_user():
-    data = request.get_json() or {}
+@usuarios.route('/usuarios', methods=['POST'])
+@body(user_schema)
+@response(user_schema, 201)
+@other_responses({401: "Unauthorized. Check your payload", 400:  "Invalid request"})
+def create_user(user):
+    data = request.get_json() or user
     if 'login' not in data or 'email' not in data or 'senha' not in data:
-        return bad_request('deve incluir login, email e senha!')
+        abort(401)
     if Usuario.query.filter_by(login=data['login']).first():
-        return bad_request('Por favor use outro login')
+        abort(401)
     if Usuario.query.filter_by(email=data['email']).first():
-        return bad_request('Por favor use outro endereço de email')
+        abort(401)
     user = Usuario()
     user.from_dict(data, new_user=True)
     db.session.add(user)
     db.session.commit()
-    response = jsonify(user.to_dict())
-    response.status_code = 201
-    response.headers['Location'] = url_for('api.get_user', id=user.id)
-    return response
+    return user.to_dict()
 
 
-@api.route('/usuarios/<int:id>', methods=['PUT'])
+@usuarios.route('/usuarios/<int:id>', methods=['PUT'])
 @token_auth.login_required
+@authenticate(token_auth)
 def update_user(id):
     if g.current_user.id != id:
         abort(403)

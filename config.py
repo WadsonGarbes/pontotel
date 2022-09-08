@@ -9,3 +9,4 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     # Cotações por página
     CPP = 10
+    APIFAIRY_UI	= "swagger_ui"
